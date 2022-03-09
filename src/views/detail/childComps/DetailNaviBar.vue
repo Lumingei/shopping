@@ -5,8 +5,8 @@
         <img src="~assets/img/common/back.svg" @click="goBack">
       </div>
       <div slot="center" class="titles">
-        <div v-for="(item,index) in titles"
-             class="titles-item"
+        <div class="titles-item"
+             v-for="(item,index) in titles" :key="index"
              @click="itemClick(index)"
              :class="{active : currentIndex === index}">
           {{item}}
@@ -34,6 +34,9 @@ export default {
   methods: {
     itemClick(index) {
       this.currentIndex = index
+      // console.log(index)
+      // console.log(this.currentIndex)
+      this.$emit('itemClick', index)
     },
     goBack() {
       this.$router.go(-1)
@@ -51,7 +54,7 @@ export default {
     text-align: center;
     font-size: 14px;
   }
-  .active {
+  .titles-item.active {
     color: var(--color-tint);
   }
   .back img {

@@ -49,8 +49,8 @@ export default {
       this.scroll && this.scroll.finishPullUp()
     },
     refresh() {
-      this.scroll && this.scroll.refresh()
       // console.log('------')
+      this.scroll && this.scroll.refresh()
     },
     getY() {
       return this.scroll ? this.scroll.y : 0

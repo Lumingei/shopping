@@ -6,7 +6,7 @@
     <tab-control :titles="['流行','新款','精选']"
                  class="{tab-control:isTop}"
                  @tabClick="tabClick"
-                 ref="tabControl"
+                 ref="topControl"
                  v-show="isTop">
     </tab-control>
     <scroll class="content" ref="scroll"
@@ -21,8 +21,7 @@
       </tab-control>
       <good-list :goods="showGoods"></good-list>
     </scroll>
-    <back-top @click.native="scrollTo" v-show="isTrue">
-    </back-top>
+    <back-top @click.native="scrollTo" v-show="isTrue"></back-top>
   </div>
 </template>
 
@@ -35,10 +34,9 @@ import NaviBar from "@/components/common/navibar/NaviBar";
 import TabControl from "../../components/content/tabControl/TabControl";
 import GoodList from "../../components/content/goods/GoodList";
 import Scroll from "../../components/common/scroll/Scroll";
-import BackTop from "../../components/content/backTop/BackTop";
 
 import {getHomeMultidata,getHomeGoods} from "../../network/home";
-import {debounce} from "../../common/utils";
+import {itemListenerMixin, backTopMixin} from "../../common/mixin";
 
 export default {
   name: "Home",
@@ -50,8 +48,7 @@ export default {
     NaviBar,
     TabControl,
     GoodList,
-    Scroll,
-    BackTop
+    Scroll
   },
   data() {
     return {
@@ -63,12 +60,12 @@ export default {
         'sell': {page: 0, list: []},
       },
       currentType: 'pop',
-      isTrue: false,
       offsetTop: 0,
       isTop: false,
-      saveY: 0
+      saveY: 0,
     }
   },
+  mixins: [itemListenerMixin, backTopMixin],
   computed: {
     showGoods() {
       return this.goods[this.currentType].list
@@ -82,14 +79,10 @@ export default {
 
   },
   mounted() {
-    const imgrefresh = debounce(this.$refs.scroll.refresh, 500)
-    this.$bus.$on('imgLoad', () => {
-      imgrefresh()
-    })
-
   },
   activated() {
     // console.log('ac')
+    // console.log(this.saveY)
     this.$refs.scroll.scrollTo(0, this.saveY, 0)
     this.$refs.scroll.refresh()
   },
@@ -97,26 +90,17 @@ export default {
     // console.log('dea ')
     this.saveY = this.$refs.scroll.getY()
     // console.log(this.saveY)
+    this.$bus.$off('itemImgLoad', this.itemImgListener)
+
   },
 
   methods: {
     //事件监听
     tabClick(index){
-      // switch (index){
-      //   case 0:
-      //     this.currentType = 'pop';
-      //     break;
-      //   case 1:
-      //     this.currentType = 'new';
-      //     break;
-      //   case 2:
-      //     this.currentType = 'sell';
-      //     break;
-      // }
       this.currentType = Object.keys(this.goods)[index]
-    },
-    scrollTo() {
-      this.$refs.scroll.scrollTo(0, 0, 500)
+      this.$refs.topControl.currentIndex = index;
+      this.$refs.tabControl.currentIndex = index;
+
     },
     contentScroll(position) {
       // console.log(position.y)
