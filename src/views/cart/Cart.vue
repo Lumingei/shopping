@@ -2,7 +2,7 @@
   <div class="cart">
     <navi-bar class="navi-bar">
       <div slot="center">
-        平菇街({{cartLength}})
+        淘淘商城({{cartLength}})
       </div>
       <cart-list></cart-list>
     </navi-bar>

@@ -2,7 +2,7 @@
   <div class="profile">
     <navi-bar class="navi-bar">
       <div slot="center">
-        我的档案
+        我的信息
       </div>
     </navi-bar>
     <user-info/>

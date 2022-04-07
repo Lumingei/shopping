@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <navi-bar class="home-nav">
-      <div slot="center">平菇街</div>
+      <div slot="center">淘淘商城</div>
     </navi-bar>
     <tab-control :titles="['流行','新款','精选']"
                  class="{tab-control:isTop}"
