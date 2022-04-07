@@ -1,5 +1,5 @@
 # shopping
-
+A Vue program "淘淘商城"
 ### 目录结构
 
 <img src="/pagesPic/0.目录结构.png" alt="0.目录结构" style="zoom:67%;" />
@@ -55,4 +55,4 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-### 
+###
