@@ -9,12 +9,16 @@ import VueLazyload from "vue-lazyload";
 import toast from 'components/common/toast'
 
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
 Vue.prototype.$bus = new Vue()
 Vue.use(toast)
 
 FastClick.attach(document.body)
-Vue.use(VueLazyload)
+Vue.use(VueLazyload, {
+  error: require('./assets/img/common/load-fail.png'),
+  loading: require('./assets/img/common/place-holder.png')
+})
 
 new Vue({
   render: h => h(App),
